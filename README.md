@@ -3,7 +3,7 @@
 Assistant IA local, généraliste et extensible. Backend Spring Boot 3 / Java 21,
 LLM local via Ollama (CPU-friendly par défaut), streaming SSE, sécurité JWT.
 
-Cible matériel : **Windows Server 2019**, Intel Xeon 6 cœurs, 64 Go RAM, sans GPU.
+
 
 ## Périmètre Phase 1
 
