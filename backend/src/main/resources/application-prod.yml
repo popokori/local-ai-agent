@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    properties:
+      hibernate.format_sql: false
+  flyway:
+    clean-disabled: true
+
+logging:
+  config: classpath:logback-spring-json.xml
+  level:
+    root: INFO
+    mr.popo.localaiagent: INFO
+
+server:
+  error:
+    include-message: never
+    include-binding-errors: never
+    include-stacktrace: never

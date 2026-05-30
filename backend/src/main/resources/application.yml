@@ -1,0 +1,107 @@
+spring:
+  application:
+    name: localaiagent-backend
+  profiles:
+    default: dev
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:localaiagent}
+    username: ${DB_USER:localaiagent}
+    password: ${DB_PASS:localaiagent}
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 2
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate.jdbc.time_zone: UTC
+      hibernate.format_sql: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  threads:
+    virtual:
+      enabled: true
+  servlet:
+    multipart:
+      max-file-size: 25MB
+      max-request-size: 25MB
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+logging:
+  level:
+    root: INFO
+    mr.popo.localaiagent: INFO
+    org.springframework.security: WARN
+    org.hibernate.SQL: WARN
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:change-me-please-this-is-only-a-dev-default-32chars-min}
+      access-ttl: 15m
+      refresh-ttl: 7d
+      issuer: localaiagent
+  cors:
+    allowed-origins: ${FRONT_ORIGIN:http://localhost:4200}
+  llm:
+    # Phase 1 : Ollama CPU uniquement. vLLM possible plus tard sans changer de code.
+    provider: ${LLM_PROVIDER:ollama}        # ollama | vllm
+    base-url: ${LLM_BASE_URL:http://localhost:11434/v1}
+    native-base-url: ${LLM_NATIVE_BASE_URL:http://localhost:11434}  # /api/tags pour health
+    api-key: ${LLM_API_KEY:}
+    default-model: ${LLM_DEFAULT_MODEL:llama3.1:8b}
+    expert-model: ${LLM_EXPERT_MODEL:llama3.1:8b}
+    fact-check-model: ${LLM_FACT_MODEL:llama3.1:8b}
+    timeout-seconds: 120
+    connect-timeout-seconds: 10
+    temperature: 0.3
+    max-tokens: 2048
+    # Alternatives CPU-friendly (à activer via env LLM_DEFAULT_MODEL) :
+    #   qwen2.5:7b-instruct
+    #   mistral:7b-instruct
+    #   qwen2.5:14b-instruct   (plus lent sur CPU 6 cœurs)
+  agent:
+    history-window: 20
+    medical-disclaimer-enabled: true
+  sse:
+    timeout-seconds: 300
+    heartbeat-seconds: 15
+  worker:
+    base-url: ${WORKER_BASE_URL:http://localhost:9000}
+    internal-token: ${WORKER_TOKEN:}
+    timeout-seconds: 300
+  rag:
+    chunk-size-chars: 1200
+    chunk-overlap-chars: 200
+    top-k: 5
+    upload-dir: ${UPLOAD_DIR:./data/uploads}
+    max-context-chars: 6000

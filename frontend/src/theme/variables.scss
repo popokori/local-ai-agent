@@ -1,0 +1,113 @@
+/* ────────────────────────────────────────────────────────────────────
+   LocalAiAgent — design tokens
+   Palette : indigo profond + accent teal, surfaces sombres par défaut,
+   typo système avec fallback Inter. Ionic 8 variables surchargées.
+   ──────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Brand */
+  --laa-brand: #6366f1;          /* indigo-500 */
+  --laa-brand-rgb: 99, 102, 241;
+  --laa-brand-soft: #818cf8;     /* indigo-400 */
+  --laa-accent: #14b8a6;         /* teal-500 */
+  --laa-accent-rgb: 20, 184, 166;
+
+  /* Typo */
+  --laa-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                   Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --laa-font-mono: 'JetBrains Mono', 'Fira Code', Menlo, Consolas, monospace;
+  --ion-font-family: var(--laa-font-sans);
+
+  /* Rayons */
+  --laa-radius-sm: 8px;
+  --laa-radius-md: 12px;
+  --laa-radius-lg: 18px;
+  --laa-radius-xl: 24px;
+}
+
+/* ─── Light theme (Ionic md) ─────────────────────────────────────────── */
+:root {
+  --ion-color-primary: var(--laa-brand);
+  --ion-color-primary-rgb: var(--laa-brand-rgb);
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5258d1;
+  --ion-color-primary-tint: #7376f3;
+
+  --ion-color-secondary: var(--laa-accent);
+  --ion-color-secondary-rgb: var(--laa-accent-rgb);
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #11a293;
+  --ion-color-secondary-tint: #2bc0b0;
+
+  --ion-color-tertiary: #f59e0b;
+  --ion-color-tertiary-rgb: 245, 158, 11;
+
+  --ion-color-success: #10b981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-warning: #f59e0b;
+  --ion-color-warning-rgb: 245, 158, 11;
+  --ion-color-danger: #ef4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+
+  --ion-background-color: #f8fafc;
+  --ion-background-color-rgb: 248, 250, 252;
+  --ion-text-color: #0f172a;
+  --ion-text-color-rgb: 15, 23, 42;
+
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-toolbar-background: #ffffff;
+
+  --ion-color-step-50:  #f1f5f9;
+  --ion-color-step-100: #e2e8f0;
+  --ion-color-step-150: #cbd5e1;
+  --ion-color-step-200: #94a3b8;
+  --ion-color-step-500: #475569;
+  --ion-color-step-700: #1e293b;
+  --ion-color-step-900: #0f172a;
+}
+
+/* ─── Dark theme (par défaut) ──────────────────────────────────────────
+   On force le dark : la grande majorité des UIs LLM modernes sont dark. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #0b1220;
+    --ion-background-color-rgb: 11, 18, 32;
+    --ion-text-color: #e2e8f0;
+    --ion-text-color-rgb: 226, 232, 240;
+
+    --ion-card-background: #111a2e;
+    --ion-item-background: #111a2e;
+    --ion-toolbar-background: #0f1729;
+
+    --ion-color-step-50:  #131c30;
+    --ion-color-step-100: #1c2540;
+    --ion-color-step-150: #243156;
+    --ion-color-step-200: #344269;
+    --ion-color-step-500: #94a3b8;
+    --ion-color-step-700: #cbd5e1;
+    --ion-color-step-900: #f8fafc;
+  }
+}
+
+/* Classe utilitaire pour forcer le dark mode quel que soit le système */
+body.theme-dark {
+  --ion-background-color: #0b1220;
+  --ion-background-color-rgb: 11, 18, 32;
+  --ion-text-color: #e2e8f0;
+  --ion-text-color-rgb: 226, 232, 240;
+
+  --ion-card-background: #111a2e;
+  --ion-item-background: #111a2e;
+  --ion-toolbar-background: #0f1729;
+
+  --ion-color-step-50:  #131c30;
+  --ion-color-step-100: #1c2540;
+  --ion-color-step-150: #243156;
+  --ion-color-step-200: #344269;
+  --ion-color-step-500: #94a3b8;
+  --ion-color-step-700: #cbd5e1;
+  --ion-color-step-900: #f8fafc;
+}

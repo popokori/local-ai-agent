@@ -1,0 +1,14 @@
+# Override optionnel à utiliser quand un GPU NVIDIA est disponible :
+#   docker compose -f docker-compose.yml -f docker-compose.gpu.yml up
+# Pré-requis hôte : pilote NVIDIA + nvidia-container-toolkit + Docker > 19.03.
+# Phase 1 cible Windows Server 2019 sans GPU confirmé — donc non utilisé par défaut.
+
+services:
+  ollama:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

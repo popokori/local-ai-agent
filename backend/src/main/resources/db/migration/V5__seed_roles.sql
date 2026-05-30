@@ -1,0 +1,5 @@
+-- V5 : rôles initiaux
+
+INSERT INTO roles (name) VALUES ('USER')   ON CONFLICT (name) DO NOTHING;
+INSERT INTO roles (name) VALUES ('ADMIN')  ON CONFLICT (name) DO NOTHING;
+INSERT INTO roles (name) VALUES ('EXPERT') ON CONFLICT (name) DO NOTHING;

@@ -1,0 +1,74 @@
+name: localaiagent
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: localaiagent-postgres
+    environment:
+      POSTGRES_DB: ${DB_NAME:-localaiagent}
+      POSTGRES_USER: ${DB_USER:-localaiagent}
+      POSTGRES_PASSWORD: ${DB_PASS:-localaiagent}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-localaiagent} -d ${DB_NAME:-localaiagent}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [llmnet]
+
+  # Ollama en CPU only (pas de runtime nvidia / gpus: all).
+  # Pour activer le GPU plus tard : utiliser docker-compose.gpu.yml en override.
+  ollama:
+    image: ollama/ollama:latest
+    container_name: localaiagent-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    restart: unless-stopped
+    networks: [llmnet]
+
+  backend:
+    build:
+      context: ../backend
+    container_name: localaiagent-backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-localaiagent}
+      DB_USER: ${DB_USER:-localaiagent}
+      DB_PASS: ${DB_PASS:-localaiagent}
+      JWT_SECRET: ${JWT_SECRET:-please_change_me_to_a_random_32_chars_minimum_secret}
+      FRONT_ORIGIN: ${FRONT_ORIGIN:-http://localhost:4200}
+      LLM_PROVIDER: ollama
+      LLM_BASE_URL: http://ollama:11434/v1
+      LLM_NATIVE_BASE_URL: http://ollama:11434
+      LLM_DEFAULT_MODEL: ${LLM_DEFAULT_MODEL:-llama3.1:8b}
+      LLM_EXPERT_MODEL: ${LLM_EXPERT_MODEL:-llama3.1:8b}
+      LLM_FACT_MODEL: ${LLM_FACT_MODEL:-llama3.1:8b}
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks: [llmnet]
+
+volumes:
+  pgdata:
+  ollama:
+
+networks:
+  llmnet:
+    driver: bridge

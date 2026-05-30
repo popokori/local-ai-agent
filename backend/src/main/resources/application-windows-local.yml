@@ -1,0 +1,32 @@
+# Profil pour exécution locale sur Windows sans Docker.
+# PostgreSQL + Ollama installés en natif sur la machine Windows.
+# Voir docs/WINDOWS_LOCAL.md pour la procédure complète.
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/localaiagent
+  flyway:
+    clean-disabled: false
+
+logging:
+  level:
+    mr.popo.localaiagent: DEBUG
+
+app:
+  cors:
+    # Inclut Ionic serve (8100), Angular (4200), Vite (5173), CRA (3000)
+    allowed-origins: ${FRONT_ORIGIN:http://localhost:4200,http://localhost:5173,http://localhost:3000,http://localhost:8100}
+  llm:
+    base-url: http://localhost:11434/v1
+    native-base-url: http://localhost:11434
+    default-model: ${LLM_DEFAULT_MODEL:llama3.1:8b}
+    expert-model: ${LLM_EXPERT_MODEL:llama3.1:8b}
+    fact-check-model: ${LLM_FACT_MODEL:llama3.1:8b}
+  agent:
+    # Désactivé en local : le LLM extrait des "faits" trop bavards qui contaminent
+    # le prompt et déclenchent des refus type "Je ne peux pas vous aider…".
+    # Réactiver via env AGENT_MEMORY_CONSOLIDATE=true après tuning du prompt extracteur.
+    memory-consolidate-enabled: ${AGENT_MEMORY_CONSOLIDATE:false}
+    # Désactivable pour les usages non-médicaux (le disclaimer pousse certains
+    # modèles vers une prudence excessive sur des sujets non liés à la santé).
+    medical-disclaimer-enabled: ${AGENT_MEDICAL_DISCLAIMER:false}

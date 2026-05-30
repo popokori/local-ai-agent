@@ -1,0 +1,70 @@
+# ─── Secrets / env ─────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+.env.ps1
+
+# ─── Backend Java / Maven ──────────────────────────────────────
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/data/
+*.class
+*.jar
+hs_err_pid*
+
+# ─── Worker Python ─────────────────────────────────────────────
+worker/.venv/
+worker/__pycache__/
+worker/**/__pycache__/
+worker/*.egg-info/
+worker/.pytest_cache/
+worker/.mypy_cache/
+worker/.ruff_cache/
+*.pyc
+*.pyo
+
+# Modèles HuggingFace pull localement (gros)
+**/huggingface/
+
+# ─── Frontend Ionic / Angular / Node ───────────────────────────
+frontend/node_modules/
+frontend/www/
+frontend/dist/
+frontend/.angular/
+frontend/coverage/
+frontend/build/
+
+# Capacitor mobile (généré)
+frontend/android/
+frontend/ios/
+
+# ─── IDE / OS ──────────────────────────────────────────────────
+.idea/
+*.iml
+*.iws
+.classpath
+.project
+.settings/
+.factorypath
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ─── Logs ──────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Docker (override) ─────────────────────────────────────────
+docker-compose.override.yml
+
+# ─── Data utilisateur ──────────────────────────────────────────
+data/
+uploads/
+
+# ─── Notes locales / outils dev ────────────────────────────────
+.claude/
+promt.txt

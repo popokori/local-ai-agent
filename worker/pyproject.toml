@@ -1,0 +1,21 @@
+[project]
+name = "localaiagent-worker"
+version = "0.1.0"
+description = "Python worker for LocalAiAgent (embeddings BGE-M3, parsing PDF/DOCX)."
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "pydantic>=2.9",
+    "python-multipart>=0.0.17",
+    # Embeddings
+    "sentence-transformers>=3.3",
+    "torch>=2.4",
+    # Parsing PDF / DOCX (légers, pas unstructured qui pèse ~1 Go)
+    "pypdf>=5.1",
+    "python-docx>=1.1",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"

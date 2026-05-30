@@ -1,0 +1,71 @@
+/* ────────────────────────────────────────────────────────────────────
+   LocalAiAgent — styles globaux
+   ──────────────────────────────────────────────────────────────────── */
+
+/* Core Ionic */
+@import "@ionic/angular/css/core.css";
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Utilitaires Ionic */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/* Dark mode auto système (les overrides spécifiques sont dans theme/variables.scss) */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Police Inter (CDN) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* ─── Tokens utilitaires ─────────────────────────────────────────────── */
+.text-muted { color: var(--ion-color-step-500); }
+.text-small { font-size: 0.85rem; }
+.text-mono  { font-family: var(--laa-font-mono); }
+.fw-500     { font-weight: 500; }
+.fw-600     { font-weight: 600; }
+.fw-700     { font-weight: 700; }
+
+.gap-1 { gap: 4px;  }
+.gap-2 { gap: 8px;  }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+
+.stack-row {
+  display: flex; align-items: center;
+}
+
+/* Card "soft" qui fonctionne en light + dark */
+.soft-card {
+  background: var(--ion-card-background);
+  border-radius: var(--laa-radius-lg);
+  border: 1px solid rgba(var(--ion-color-primary-rgb), 0.08);
+}
+
+/* Scrollbar discrète sur web */
+@media (pointer: fine) {
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--ion-color-step-150);
+    border-radius: 6px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ion-color-step-200); }
+  ::-webkit-scrollbar-track { background: transparent; }
+}
+
+/* Petit effet "shine" sur les boutons primaires */
+ion-button[fill="solid"] {
+  --box-shadow: 0 6px 16px -8px rgba(var(--ion-color-primary-rgb), 0.45);
+}
+
+/* Toolbar plus lisible */
+ion-toolbar ion-title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
