@@ -36,6 +36,9 @@ public class PythonExecTool implements Tool {
     public String description() {
         return "Exécute du code Python (stdout capturé). Timeout 8s par défaut. "
                 + "Utilise print(...) pour renvoyer un résultat. "
+                + "Bibliothèques disponibles : stdlib complète (math, json, re, datetime, "
+                + "urllib, etc.) + requests, numpy, pandas. "
+                + "Pas de pip install possible — n'utilise que ces libs. "
                 + "Exemple : print(sum(range(100))).";
     }
 
